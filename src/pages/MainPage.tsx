@@ -1,9 +1,12 @@
 import { Header } from "../components/Header/Header.tsx";
+interface MainPageProps {
+  toggleTheme: () => void;
+}
 
-export const MainPage = () => {
+export const MainPage = ({ toggleTheme }: MainPageProps) => {
   return (
     <div>
-      <Header />
+      <Header toggleTheme={toggleTheme} />
     </div>
   );
 };
