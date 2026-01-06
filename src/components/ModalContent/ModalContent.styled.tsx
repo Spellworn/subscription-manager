@@ -66,15 +66,26 @@ export const Form = styled.form`
   gap: ${({ theme }) => theme.size.xs};
 `;
 
-export const Label = styled.label`
+interface LabelProps {
+  isIncorrectData?: boolean;
+}
+
+export const Label = styled.label<LabelProps>`
   font-size: ${({ theme }) => theme.size.m};
-  color: ${({ theme }) => theme.palette.text.secondary};
+  color: ${({ isIncorrectData }) =>
+    isIncorrectData ? "#af0000" : ({ theme }) => theme.palette.text.secondary};
 `;
 
-export const Input = styled.input`
+interface InputProps {
+  isIncorrectData?: boolean;
+}
+
+export const Input = styled.input<InputProps>`
   padding: ${({ theme }) => theme.size.m};
   border-radius: ${({ theme }) => theme.size.xxl};
-  border: 0 solid ${({ theme }) => theme.palette.inputBorder};
+  border: 0 solid
+    ${({ isIncorrectData }) =>
+      isIncorrectData ? "#af0000" : ({ theme }) => theme.palette.inputBorder};
   background: ${({ theme }) => theme.palette.inputBackground};
   color: ${({ theme }) => theme.palette.text.primary};
 
@@ -160,4 +171,9 @@ export const HexInput = styled(Input)`
   flex: 1;
   width: 100%;
   min-width: 0;
+`;
+
+export const IncorrectDataText = styled.span`
+  font-size: ${({ theme }) => theme.size.s};
+  color: #af0000;
 `;

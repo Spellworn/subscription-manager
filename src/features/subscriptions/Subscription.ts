@@ -4,4 +4,5 @@ export interface Subscription {
   id: SubscriptionId;
   name: string;
   price: number;
+  color: string;
 }
