@@ -1,4 +1,4 @@
-import * as S from "./ModalContent.styled.tsx";
+import * as S from "./ModalContent.styled.ts";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/store.ts";
 import {

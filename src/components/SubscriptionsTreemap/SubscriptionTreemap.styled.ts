@@ -4,13 +4,10 @@ import { ResponsiveContainer } from "recharts";
 export const TreemapContainer = styled.div`
   display: flex;
   justify-content: center;
-  width: 50%;
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 70vh;
+  width: 100%;
+  height: 60vh;
   padding: ${({ theme }) => theme.size.xl};
-  border-radius: 16px;
+  border-radius: ${({ theme }) => theme.size.xl};
   background: ${({ theme }) => theme.palette.treemapBackground};
 `;
 

@@ -2,7 +2,7 @@ import { Treemap } from "recharts";
 import { SubscriptionTreemapContent } from "./SubscriptionTreemapContent/SubscriptionTreemapContent.tsx";
 import { useAppSelector } from "../../app/store.ts";
 import { selectSubscriptionsIdsAndSize } from "../../features/subscriptions/subscriptionsSlice.ts";
-import * as S from "./SubscriptionTreemap.styled.tsx";
+import * as S from "./SubscriptionTreemap.styled.ts";
 import { useAppTheme } from "../../styles/theme.ts";
 
 export const SubscriptionsTreemap = () => {

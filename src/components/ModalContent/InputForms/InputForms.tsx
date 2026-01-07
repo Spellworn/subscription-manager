@@ -1,4 +1,4 @@
-import * as S from "../ModalContent.styled.tsx";
+import * as S from "../ModalContent.styled.ts";
 import type { Dispatch, SetStateAction } from "react";
 
 interface InputFormsProps {

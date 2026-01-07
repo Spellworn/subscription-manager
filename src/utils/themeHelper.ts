@@ -7,6 +7,7 @@ export interface Palette {
     secondary: Color;
     muted: Color;
     accent: Color;
+    yearlySubscriptionText: Color;
   };
   overlay: Color;
   modalBackground: Color;
@@ -31,6 +32,7 @@ const setColorPalette = (isDark: boolean) => {
         secondary: "#A1A1AA",
         muted: "#98989f",
         accent: "#FFFFFF",
+        yearlySubscriptionText: "#6466F1",
       },
       overlay: "rgba(12, 12, 18, 0.28)",
       modalBackground: "#15151F",
@@ -54,6 +56,7 @@ const setColorPalette = (isDark: boolean) => {
       secondary: "#717182",
       muted: "#7F7F80",
       accent: "#FFFFFF",
+      yearlySubscriptionText: "#6466F1",
     },
     overlay: "rgba(12, 12, 18, 0.28)",
     modalBackground: "#ffffff",

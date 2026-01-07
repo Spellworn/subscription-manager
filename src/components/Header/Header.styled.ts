@@ -5,13 +5,13 @@ export const Header = styled.header`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: ${({ theme }) => theme.size.xxl} ${({ theme }) => theme.size.xl};
+  padding: ${({ theme }) => theme.size.xxl} ${({ theme }) => theme.size.xxxl} 0;
 `;
 
 export const Title = styled.h1`
   margin: 0;
   color: ${({ theme }) => theme.palette.text.primary};
-  font-size: ${({ theme }) => theme.size.xxl};
+  font-size: ${({ theme }) => theme.size.xl};
 `;
 
 export const Button = styled.button`

@@ -1,4 +1,4 @@
-import * as S from "../ModalContent.styled.tsx";
+import * as S from "../ModalContent.styled.ts";
 
 interface ColorFormProps {
   color: string;

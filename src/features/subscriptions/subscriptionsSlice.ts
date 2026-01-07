@@ -43,15 +43,22 @@ export const selectSubscriptionsIdsAndSize = createSelector(
   },
 );
 
-export const selectCostOfAllSubscription = createSelector(
+export const selectCostOfAllSubscriptions = createSelector(
   [subscriptionsSelector.selectAll],
   (subscriptions) => {
     let subscriptionPrice = 0;
-    for (let i = 0; i < subscriptions.length; i++) {
-      subscriptionPrice += subscriptions[i].price;
-    }
+    subscriptions.map(
+      (subscription) => (subscriptionPrice += subscription.price),
+    );
 
     return subscriptionPrice;
+  },
+);
+
+export const selectIsSubscriptionsExist = createSelector(
+  [subscriptionsSelector.selectAll],
+  (subscriptions) => {
+    return subscriptions.length !== 0;
   },
 );
 
