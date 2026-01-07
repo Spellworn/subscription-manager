@@ -136,6 +136,15 @@ export const CancelButton = styled(BaseButton)`
   }
 `;
 
+export const DeleteButton = styled(BaseButton)`
+  background-color: #ac0000;
+  color: ${({ theme }) => theme.palette.text.accent};
+
+  &:hover {
+    background-color: #970000;
+  }
+`;
+
 export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;

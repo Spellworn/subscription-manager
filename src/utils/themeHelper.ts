@@ -19,6 +19,7 @@ export interface Palette {
   inputBorder: Color;
   inputBackground: Color;
   container: Color;
+  treemapBackground: Color;
 }
 
 const setColorPalette = (isDark: boolean) => {
@@ -42,6 +43,7 @@ const setColorPalette = (isDark: boolean) => {
       inputBorder: "#DADADC",
       inputBackground: "#0A0A0E",
       container: "#ededed",
+      treemapBackground: "#15151F",
     };
   }
 
@@ -64,6 +66,7 @@ const setColorPalette = (isDark: boolean) => {
     inputBorder: "#DADADC",
     inputBackground: "#F3F3F5",
     container: "#ededed",
+    treemapBackground: "#f4f4f4",
   };
 };
 

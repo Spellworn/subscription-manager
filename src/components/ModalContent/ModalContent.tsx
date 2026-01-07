@@ -1,27 +1,41 @@
 import * as S from "./ModalContent.styled.tsx";
 import { useState } from "react";
-import { useAppDispatch } from "../../app/store.ts";
-import { subscriptionAdded } from "../../features/subscriptions/subscriptionsSlice.ts";
+import { useAppDispatch, useAppSelector } from "../../app/store.ts";
+import {
+  selectSubscriptionById,
+  subscriptionAddedOrEdited,
+  subscriptionDeleted,
+} from "../../features/subscriptions/subscriptionsSlice.ts";
 import { nanoid } from "@reduxjs/toolkit";
 import { ColorForm } from "./ColorForm/ColorForm.tsx";
 import { InputForm } from "./InputForms/InputForms.tsx";
+import { styleHelper } from "../../utils/styleHelper.ts";
+import type { SubscriptionId } from "../../features/subscriptions/Subscription.ts";
 
 interface ModalContentProps {
   onClose: () => void;
+  id?: SubscriptionId;
 }
 
-export const ModalContent = ({ onClose }: ModalContentProps) => {
-  const [color, setColor] = useState("#EC1313");
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState<number>();
+export const ModalContent = ({ onClose, id }: ModalContentProps) => {
+  const subscription = useAppSelector((state) =>
+    selectSubscriptionById(state, id),
+  );
+  const [color, setColor] = useState(
+    subscription?.color ? subscription.color : styleHelper.getRandomHexColor,
+  );
+  const [name, setName] = useState(subscription?.name ? subscription.name : "");
+  const [price, setPrice] = useState<number | undefined>(
+    subscription?.price ? subscription.price : undefined,
+  );
   const [isIncorrectData, setIsIncorrectData] = useState(false);
   const dispatch = useAppDispatch();
 
   const handleAddSubscription = () => {
     if (name.length > 0 && price) {
       dispatch(
-        subscriptionAdded({
-          id: nanoid(),
+        subscriptionAddedOrEdited({
+          id: subscription?.id ? subscription.id : nanoid(),
           name: name,
           price: price,
           color: color,
@@ -36,6 +50,14 @@ export const ModalContent = ({ onClose }: ModalContentProps) => {
     }
   };
 
+  const handleDeleteSubscription = () => {
+    if (id) {
+      dispatch(subscriptionDeleted(id));
+      setIsIncorrectData(false);
+      onClose();
+    }
+  };
+
   return (
     <S.Overlay
       onMouseDown={(e) => {
@@ -44,7 +66,8 @@ export const ModalContent = ({ onClose }: ModalContentProps) => {
     >
       <S.ModalCard>
         <S.Container>
-          <S.Title>Добавить подписку</S.Title>
+          {subscription && <S.Title>Редактировать подписку</S.Title>}
+          {!subscription && <S.Title>Добавить подписку</S.Title>}
           <InputForm
             type={"name"}
             isIncorrectData={isIncorrectData}
@@ -60,6 +83,11 @@ export const ModalContent = ({ onClose }: ModalContentProps) => {
           <ColorForm color={color} setColor={setColor} />
           <S.ButtonContainer>
             <S.CancelButton onClick={onClose}>Отмена</S.CancelButton>
+            {id && (
+              <S.DeleteButton onClick={handleDeleteSubscription}>
+                Удалить
+              </S.DeleteButton>
+            )}
             <S.AddButton onClick={handleAddSubscription}>Добавить</S.AddButton>
           </S.ButtonContainer>
         </S.Container>

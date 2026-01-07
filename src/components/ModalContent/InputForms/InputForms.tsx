@@ -1,12 +1,13 @@
 import * as S from "../ModalContent.styled.tsx";
+import type { Dispatch, SetStateAction } from "react";
 
 interface InputFormsProps {
   type: "price" | "name";
   isIncorrectData: boolean;
   name?: string;
-  setName?: (e: string) => void;
+  setName?: Dispatch<SetStateAction<string>>;
   price?: number;
-  setPrice?: (e: number) => void;
+  setPrice?: Dispatch<SetStateAction<number | undefined>>;
 }
 
 export const InputForm = ({
@@ -35,7 +36,9 @@ export const InputForm = ({
         onChange={(e) =>
           type === "name"
             ? setName?.(e.target.value)
-            : setPrice?.(Number(e.target.value))
+            : setPrice?.(
+                e.target.value === "" ? undefined : Number(e.target.value),
+              )
         }
         isIncorrectData={
           type === "name"
@@ -43,6 +46,7 @@ export const InputForm = ({
             : isIncorrectData && !price
         }
         type={type === "name" ? "text" : "number"}
+        value={type === "name" ? name : (price ?? "")}
       />
       {isIncorrectData && name?.length === 0 && (
         <S.IncorrectDataText>Введите название подписки</S.IncorrectDataText>
