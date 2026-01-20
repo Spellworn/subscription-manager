@@ -4,14 +4,13 @@ import { useAppSelector } from "../app/store.ts";
 import { selectIsSubscriptionsExist } from "../features/subscriptions/subscriptionsSlice.ts";
 import { SubscriptionsPrice } from "../components/SubscriptionsPrice/SubscriptionsPrice.tsx";
 import * as S from "./MainPage.styled.ts";
+
 interface MainPageProps {
   toggleTheme: () => void;
 }
 
 export const MainPage = ({ toggleTheme }: MainPageProps) => {
-  const isSubscriptionsExist = useAppSelector((state) =>
-    selectIsSubscriptionsExist(state),
-  );
+  const isSubscriptionsExist = useAppSelector( selectIsSubscriptionsExist );
 
   return (
     <S.Container>

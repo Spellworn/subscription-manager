@@ -6,9 +6,7 @@ import * as S from "./SubscriptionTreemap.styled.ts";
 import { useAppTheme } from "../../styles/theme.ts";
 
 export const SubscriptionsTreemap = () => {
-  const subscriptionsData = useAppSelector((state) =>
-    selectSubscriptionsIdsAndSize(state),
-  );
+  const subscriptionsData = useAppSelector(selectSubscriptionsIdsAndSize);
   const theme = useAppTheme();
 
   return (
@@ -17,11 +15,11 @@ export const SubscriptionsTreemap = () => {
         <S.StyledResponsive>
           <Treemap
             data={subscriptionsData}
-            type={"flat"}
+            type="flat"
             dataKey="size"
             fill={theme.palette.treemapBackground}
             content={(p) => <SubscriptionTreemapContent {...p} />}
-          ></Treemap>
+          />
         </S.StyledResponsive>
       </S.TreemapContainer>
     )

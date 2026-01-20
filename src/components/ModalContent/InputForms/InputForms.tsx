@@ -1,58 +1,68 @@
 import * as S from "../ModalContent.styled.ts";
-import type { Dispatch, SetStateAction } from "react";
+import type { ChangeEventHandler } from "react";
 
-interface InputFormsProps {
-  type: "price" | "name";
+interface InputFormsProps<
+  TType extends "price" | "name",
+  TValue extends number | string | undefined,
+  TSetValue extends (value: TValue) => void,
+> {
+  type: TType;
   isIncorrectData: boolean;
-  name?: string;
-  setName?: Dispatch<SetStateAction<string>>;
-  price?: number;
-  setPrice?: Dispatch<SetStateAction<number | undefined>>;
+  value: TValue | undefined;
+  setValue: TSetValue;
 }
 
-export const InputForm = ({
+export const InputForm = <
+  TType extends "price" | "name",
+  TValue extends number | string | undefined,
+  TSetValue extends (value: TValue) => void,
+>({
   type,
   isIncorrectData,
-  name,
-  setName,
-  price,
-  setPrice,
-}: InputFormsProps) => {
+  value,
+  setValue,
+}: InputFormsProps<TType, TValue, TSetValue>) => {
+  const isDataIncorrect =
+    typeof value === "string"
+      ? isIncorrectData && value?.length === 0
+      : isIncorrectData && !value;
+
+  const onChangeEvent: ChangeEventHandler<HTMLInputElement> = (e) => {
+    let newValue = undefined as TValue;
+
+    if (typeof value === "string") {
+      newValue = e.target.value as TValue;
+    } else if (typeof value === "number") {
+      newValue = (
+        e.target.value === "" ? undefined : Number(e.target.value)
+      ) as TValue;
+    }
+
+    setValue(newValue);
+  };
+
   return (
     <S.Form>
-      <S.Label
-        htmlFor={type}
-        isIncorrectData={
-          type === "name"
-            ? isIncorrectData && name?.length === 0
-            : isIncorrectData && !price
-        }
-      >
+      <S.Label htmlFor={type} isIncorrectData={isDataIncorrect}>
         {type === "name" ? "Название подписки" : "Стоимость подписки"}
       </S.Label>
       <S.Input
         id={type}
         placeholder={type === "name" ? "Spotify, Яндекс Плюс и т.д." : "0.00"}
-        onChange={(e) =>
-          type === "name"
-            ? setName?.(e.target.value)
-            : setPrice?.(
-                e.target.value === "" ? undefined : Number(e.target.value),
-              )
-        }
-        isIncorrectData={
-          type === "name"
-            ? isIncorrectData && name?.length === 0
-            : isIncorrectData && !price
-        }
+        onChange={onChangeEvent}
+        isIncorrectData={isDataIncorrect}
         type={type === "name" ? "text" : "number"}
-        value={type === "name" ? name : (price ?? "")}
+        value={value ?? ""}
       />
-      {isIncorrectData && name?.length === 0 && (
-        <S.IncorrectDataText>Введите название подписки</S.IncorrectDataText>
-      )}
-      {isIncorrectData && !price && name === undefined && (
-        <S.IncorrectDataText>Введите цену подписки</S.IncorrectDataText>
+      {isIncorrectData && (
+        <>
+          {typeof value === "string" && value?.length === 0 && (
+            <S.IncorrectDataText>Введите название подписки</S.IncorrectDataText>
+          )}
+          {!value && value === undefined && (
+            <S.IncorrectDataText>Введите цену подписки</S.IncorrectDataText>
+          )}
+        </>
       )}
     </S.Form>
   );
