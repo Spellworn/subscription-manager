@@ -9,7 +9,7 @@ export const subscriptionsSlice = createSlice({
   name: "subscriptions",
   initialState,
   reducers: {
-    subscriptionAdded: subscriptionsAdapter.addOne,
+    subscriptionAddedOrEdited: subscriptionsAdapter.upsertOne,
     subscriptionDeleted: subscriptionsAdapter.removeOne,
     subscriptionEdited: subscriptionsAdapter.updateOne,
   },
@@ -33,17 +33,34 @@ export const selectSubscriptionById = createSelector(
   },
 );
 
-export const selectCostOfAllSubscription = createSelector(
+export const selectSubscriptionsIdsAndSize = createSelector(
+  [subscriptionsSelector.selectAll],
+  (subscriptions) => {
+    return subscriptions.map((subscription) => ({
+      id: subscription.id,
+      size: subscription.price,
+    }));
+  },
+);
+
+export const selectCostOfAllSubscriptions = createSelector(
   [subscriptionsSelector.selectAll],
   (subscriptions) => {
     let subscriptionPrice = 0;
-    for (let i = 0; i < subscriptions.length; i++) {
-      subscriptionPrice += subscriptions[i].price;
-    }
+    subscriptions.forEach(
+      (subscription) => (subscriptionPrice += subscription.price),
+    );
 
     return subscriptionPrice;
   },
 );
 
-export const { subscriptionAdded, subscriptionDeleted, subscriptionEdited } =
+export const selectIsSubscriptionsExist = createSelector(
+  [subscriptionsSelector.selectTotal],
+  (subscriptionsLength) => {
+    return subscriptionsLength !== 0;
+  },
+);
+
+export const { subscriptionAddedOrEdited, subscriptionDeleted } =
   subscriptionsSlice.actions;

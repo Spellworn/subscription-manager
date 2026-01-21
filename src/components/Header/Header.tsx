@@ -1,10 +1,18 @@
 import * as S from "./Header.styled.ts";
+import { PortalModal } from "../PortalModal/PortalModal.tsx";
 
-export const Header = () => {
+interface HeaderProps {
+  toggleTheme: () => void;
+}
+
+export const Header = ({ toggleTheme }: HeaderProps) => {
   return (
     <S.Header>
-      <h1>Мои подписки</h1>
-      <S.Button>Добавить подписку</S.Button>
+      <S.Title>Мои подписки</S.Title>
+      <S.Container>
+        <PortalModal />
+        <S.Button onClick={toggleTheme}>Тема</S.Button>
+      </S.Container>
     </S.Header>
   );
 };

@@ -9,4 +9,5 @@ export const subscriptionsAdapter = createEntityAdapter<
   SubscriptionId
 >({
   selectId: (subscription: Subscription) => subscription.id,
+  sortComparer: (a, b) => b.price - a.price,
 });
