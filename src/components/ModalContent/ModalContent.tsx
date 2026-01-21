@@ -22,9 +22,9 @@ export const ModalContent = ({ onClose, id }: ModalContentProps) => {
     selectSubscriptionById(state, id),
   );
   const [color, setColor] = useState(
-    subscription?.color ? subscription.color : styleHelper.getRandomHexColor,
+    subscription?.color ?? styleHelper.getRandomHexColor,
   );
-  const [name, setName] = useState(subscription?.name ? subscription.name : "");
+  const [name, setName] = useState(subscription?.name ?? "");
   const [price, setPrice] = useState<number | undefined>(
     subscription?.price ? subscription.price : undefined,
   );
@@ -35,13 +35,12 @@ export const ModalContent = ({ onClose, id }: ModalContentProps) => {
     if (name.length > 0 && price) {
       dispatch(
         subscriptionAddedOrEdited({
-          id: subscription?.id ? subscription.id : nanoid(),
-          name: name,
-          price: price,
-          color: color,
+          id: subscription?.id ?? nanoid(),
+          name,
+          price,
+          color,
         }),
       );
-      setIsIncorrectData(false);
       onClose();
     }
 
@@ -53,32 +52,35 @@ export const ModalContent = ({ onClose, id }: ModalContentProps) => {
   const handleDeleteSubscription = () => {
     if (id) {
       dispatch(subscriptionDeleted(id));
-      setIsIncorrectData(false);
       onClose();
     }
   };
 
+  // TODO: react hook form
   return (
     <S.Overlay
       onMouseDown={(e) => {
-        if (e.target === e.currentTarget) onClose();
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
       }}
     >
       <S.ModalCard>
         <S.Container>
-          {subscription && <S.Title>Редактировать подписку</S.Title>}
-          {!subscription && <S.Title>Добавить подписку</S.Title>}
+          <S.Title>
+            {subscription ? "Редактировать подписку" : "Добавить подписку"}
+          </S.Title>
           <InputForm
-            type={"name"}
+            type="name"
             isIncorrectData={isIncorrectData}
-            name={name}
-            setName={setName}
+            value={name}
+            setValue={setName}
           />
           <InputForm
-            type={"price"}
+            type="price"
             isIncorrectData={isIncorrectData}
-            price={price}
-            setPrice={setPrice}
+            value={price}
+            setValue={setPrice}
           />
           <ColorForm color={color} setColor={setColor} />
           <S.ButtonContainer>

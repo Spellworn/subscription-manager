@@ -1,18 +1,15 @@
 import { useAppSelector } from "../../../app/store.ts";
 import { selectSubscriptionById } from "../../../features/subscriptions/subscriptionsSlice.ts";
-import type { SubscriptionId } from "../../../features/subscriptions/Subscription.ts";
 import { styleHelper } from "../../../utils/styleHelper.ts";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { ModalContent } from "../../ModalContent/ModalContent.tsx";
+import type { TreemapNode } from "recharts";
 
-interface SubscriptionTreemapContentProps {
-  x?: number;
-  y?: number;
-  width?: number;
-  height?: number;
-  id?: SubscriptionId;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+interface SubscriptionTreemapContentProps extends Partial<
+  Pick<TreemapNode, "x" | "y" | "width" | "height" | "id">
+> {}
 
 export const SubscriptionTreemapContent = ({
   x = 0,
@@ -55,7 +52,7 @@ export const SubscriptionTreemapContent = ({
           ry={styleHelper.remToPx(0.75)}
           fill={subscription?.color}
         />
-        {innerWidth > 60 && innerHeight > 24 && (
+        {innerWidth > 60 && (
           <>
             <text
               x={innerX + styleHelper.remToPx(1)}

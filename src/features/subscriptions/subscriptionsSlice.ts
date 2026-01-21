@@ -47,7 +47,7 @@ export const selectCostOfAllSubscriptions = createSelector(
   [subscriptionsSelector.selectAll],
   (subscriptions) => {
     let subscriptionPrice = 0;
-    subscriptions.map(
+    subscriptions.forEach(
       (subscription) => (subscriptionPrice += subscription.price),
     );
 
@@ -56,14 +56,11 @@ export const selectCostOfAllSubscriptions = createSelector(
 );
 
 export const selectIsSubscriptionsExist = createSelector(
-  [subscriptionsSelector.selectAll],
-  (subscriptions) => {
-    return subscriptions.length !== 0;
+  [subscriptionsSelector.selectTotal],
+  (subscriptionsLength) => {
+    return subscriptionsLength !== 0;
   },
 );
 
-export const {
-  subscriptionAddedOrEdited,
-  subscriptionDeleted,
-  subscriptionEdited,
-} = subscriptionsSlice.actions;
+export const { subscriptionAddedOrEdited, subscriptionDeleted } =
+  subscriptionsSlice.actions;
