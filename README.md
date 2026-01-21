@@ -1,73 +1,57 @@
-# React + TypeScript + Vite
+# Subscription Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Приложение для управления подписками, реализованное с использованием React и TypeScript, собрано с помощью Vite.
 
-Currently, two official plugins are available:
+Приложение позволяет просматривать, добавлять, редактировать и удалять подписки, анализировать расходы с помощью интерактивной визуализации в виде treemap и отслеживать стоимость подписок.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Ключевой функционал:
+- Просмотр списка подписок с отображением стоимости и информации
+- Добавление новой подписки с указанием названия, цены и категории
+- Редактирование: обновление деталей подписки в модальном окне
+- Удаление подписок
+- Визуализация расходов: интерактивная древовидная карта (treemap) для анализа распределения затрат по категориям
+- Отображение общей стоимости подписок
 
-## React Compiler
+## Технологии
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+[![](https://img.shields.io/badge/-React-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://reactjs.org/)
+[![](https://img.shields.io/badge/-TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![](https://img.shields.io/badge/-Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![](https://img.shields.io/badge/-Redux%20Toolkit-764ABC?style=for-the-badge&logo=redux&logoColor=white)](https://redux-toolkit.js.org/)
+[![](https://img.shields.io/badge/-Emotion-FF4785?style=for-the-badge&logo=emotion&logoColor=white)](https://emotion.sh/docs/introduction)
+[![](https://img.shields.io/badge/-Recharts-8884D8?style=for-the-badge&logo=recharts&logoColor=white)](https://recharts.org/)
 
-## Expanding the ESLint configuration
+## Структура проекта
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- `src/` — исходники приложения
+  - `main.tsx` — точка входа приложения
+  - `App.tsx` — корневой компонент
+  - `components/` — UI-компоненты
+    - `Header/` — заголовок приложения
+    - `ModalContent/` — содержимое модального окна для добавления/редактирования подписок
+    - `PortalModal/` — модальное окно на основе React Portal
+    - `SubscriptionsPrice/` — компонент отображения стоимости подписок
+    - `SubscriptionsTreemap/` — компонент визуализации в виде древовидной карты
+  - `features/` — бизнес-логика приложения
+    - `subscriptions/` — слайсы Redux для управления подписками
+  - `pages/` — страницы приложения
+    - `MainPage.tsx` — главная страница
+  - `app/` — конфигурация Redux
+    - `store.ts` — Redux store
+    - `adapters.ts` — адаптеры для нормализации данных
+  - `styles/` — глобальные стили и тема
+  - `utils/` — вспомогательные функции
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Установка (разработка)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Сборка
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
 ```
+
